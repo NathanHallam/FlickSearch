@@ -1,5 +1,5 @@
 //
-//  AppDelegate.m
+//  FSAppDelegate.m
 //  FlickSearch
 //
 //  Created by Nathan Hallam on 4/11/2015.

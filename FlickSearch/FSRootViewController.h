@@ -1,5 +1,5 @@
 //
-//  FSAppDelegate.h
+//  FSRootViewController.h
 //  FlickSearch
 //
 //  Created by Nathan Hallam on 4/11/2015.
@@ -8,9 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FSAppDelegate : UIResponder <UIApplicationDelegate>
-
-@property (strong, nonatomic) UIWindow *window;
+@interface FSRootViewController : UIViewController
 
 
 @end

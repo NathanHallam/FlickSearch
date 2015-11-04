@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		754A5F0D1BE9E07900059841 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 754A5F0C1BE9E07900059841 /* main.m */; };
 		754A5F101BE9E07900059841 /* FSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 754A5F0F1BE9E07900059841 /* FSAppDelegate.m */; };
-		754A5F131BE9E07900059841 /* FSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 754A5F121BE9E07900059841 /* FSViewController.m */; };
+		754A5F131BE9E07900059841 /* FSRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 754A5F121BE9E07900059841 /* FSRootViewController.m */; };
 		754A5F161BE9E07900059841 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 754A5F141BE9E07900059841 /* Main.storyboard */; };
 		754A5F181BE9E07900059841 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 754A5F171BE9E07900059841 /* Assets.xcassets */; };
-		754A5F1B1BE9E07900059841 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 754A5F191BE9E07900059841 /* LaunchScreen.storyboard */; };
 		754A5F231BE9E17F00059841 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754A5F221BE9E17F00059841 /* UIKit.framework */; };
+		754A5F291BE9EF2000059841 /* FSPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 754A5F281BE9EF2000059841 /* FSPhotosViewController.m */; };
 		E4CB73A1A117D706C9B00B11 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 995EF0687488C107A1A8DB3A /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -24,13 +24,14 @@
 		754A5F0C1BE9E07900059841 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		754A5F0E1BE9E07900059841 /* FSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSAppDelegate.h; sourceTree = "<group>"; };
 		754A5F0F1BE9E07900059841 /* FSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FSAppDelegate.m; sourceTree = "<group>"; };
-		754A5F111BE9E07900059841 /* FSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSViewController.h; sourceTree = "<group>"; };
-		754A5F121BE9E07900059841 /* FSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FSViewController.m; sourceTree = "<group>"; };
+		754A5F111BE9E07900059841 /* FSRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSRootViewController.h; sourceTree = "<group>"; };
+		754A5F121BE9E07900059841 /* FSRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FSRootViewController.m; sourceTree = "<group>"; };
 		754A5F151BE9E07900059841 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		754A5F171BE9E07900059841 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		754A5F1A1BE9E07900059841 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		754A5F1C1BE9E07900059841 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		754A5F221BE9E17F00059841 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		754A5F281BE9EF2000059841 /* FSPhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSPhotosViewController.m; sourceTree = "<group>"; };
+		754A5F2A1BE9EF4100059841 /* FSPhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSPhotosViewController.h; sourceTree = "<group>"; };
 		995EF0687488C107A1A8DB3A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -77,13 +78,14 @@
 		754A5F0A1BE9E07900059841 /* FlickSearch */ = {
 			isa = PBXGroup;
 			children = (
+				754A5F271BE9E9B500059841 /* Externals */,
+				754A5F261BE9E52A00059841 /* Layouts */,
+				754A5F251BE9E52100059841 /* Cells */,
+				754A5F241BE9E51B00059841 /* Controllers */,
 				754A5F0E1BE9E07900059841 /* FSAppDelegate.h */,
 				754A5F0F1BE9E07900059841 /* FSAppDelegate.m */,
-				754A5F111BE9E07900059841 /* FSViewController.h */,
-				754A5F121BE9E07900059841 /* FSViewController.m */,
 				754A5F141BE9E07900059841 /* Main.storyboard */,
 				754A5F171BE9E07900059841 /* Assets.xcassets */,
-				754A5F191BE9E07900059841 /* LaunchScreen.storyboard */,
 				754A5F1C1BE9E07900059841 /* Info.plist */,
 				754A5F0B1BE9E07900059841 /* Supporting Files */,
 			);
@@ -96,6 +98,38 @@
 				754A5F0C1BE9E07900059841 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		754A5F241BE9E51B00059841 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				754A5F111BE9E07900059841 /* FSRootViewController.h */,
+				754A5F121BE9E07900059841 /* FSRootViewController.m */,
+				754A5F2A1BE9EF4100059841 /* FSPhotosViewController.h */,
+				754A5F281BE9EF2000059841 /* FSPhotosViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		754A5F251BE9E52100059841 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		754A5F261BE9E52A00059841 /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Layouts;
+			sourceTree = "<group>";
+		};
+		754A5F271BE9E9B500059841 /* Externals */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Externals;
 			sourceTree = "<group>";
 		};
 		FE7DED3AA5AC38D1607F5A88 /* Frameworks */ = {
@@ -167,7 +201,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				754A5F1B1BE9E07900059841 /* LaunchScreen.storyboard in Resources */,
 				754A5F181BE9E07900059841 /* Assets.xcassets in Resources */,
 				754A5F161BE9E07900059841 /* Main.storyboard in Resources */,
 			);
@@ -228,7 +261,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				754A5F131BE9E07900059841 /* FSViewController.m in Sources */,
+				754A5F291BE9EF2000059841 /* FSPhotosViewController.m in Sources */,
+				754A5F131BE9E07900059841 /* FSRootViewController.m in Sources */,
 				754A5F101BE9E07900059841 /* FSAppDelegate.m in Sources */,
 				754A5F0D1BE9E07900059841 /* main.m in Sources */,
 			);
@@ -243,14 +277,6 @@
 				754A5F151BE9E07900059841 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		754A5F191BE9E07900059841 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				754A5F1A1BE9E07900059841 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

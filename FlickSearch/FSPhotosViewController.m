@@ -1,18 +1,19 @@
 //
-//  ViewController.m
+//  FSPhotosViewController.m
 //  FlickSearch
 //
 //  Created by Nathan Hallam on 4/11/2015.
 //  Copyright © 2015 Nathan Hallam. All rights reserved.
 //
 
-#import "FSViewController.h"
+#import "FSPhotosViewController.h"
 
-@interface FSViewController ()
+
+@interface FSPhotosViewController ()
 
 @end
 
-@implementation FSViewController
+@implementation FSPhotosViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -23,5 +24,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 @end

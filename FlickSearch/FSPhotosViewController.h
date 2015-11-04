@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  FSPhotosViewController.h
 //  FlickSearch
 //
 //  Created by Nathan Hallam on 4/11/2015.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FSViewController : UIViewController
+@interface FSPhotosViewController : UIViewController
 
 
 @end
