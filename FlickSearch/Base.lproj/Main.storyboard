@@ -3,12 +3,14 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
         <scene sceneID="DUr-Er-EfX">
             <objects>
-                <navigationController id="K3x-H6-elH" sceneMemberID="viewController">
+                <navigationController navigationBarHidden="YES" id="K3x-H6-elH" sceneMemberID="viewController">
+                    <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="N6h-Rr-xB1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -39,7 +41,7 @@
                                 <rect key="frame" x="256" y="264" width="89" height="72"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -48,7 +50,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="nbs-CP-roy"/>
                     <connections>
-                        <segue destination="Wz2-OH-7gi" kind="custom" id="4LL-Dp-peT"/>
+                        <segue destination="Wz2-OH-7gi" kind="show" identifier="RootPhotosSegue" id="4LL-Dp-peT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t1W-Ot-Pmn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -58,7 +60,6 @@
         <!--Photos View Controller-->
         <scene sceneID="XNn-cd-hYx">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Emh-7t-GhP" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController title="Photos View Controller" id="Wz2-OH-7gi" customClass="FSPhotosViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hQQ-qc-ph4"/>
@@ -68,40 +69,59 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HaS-LW-bH2">
-                                <rect key="frame" x="50" y="50" width="490" height="456"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HaS-LW-bH2">
+                                <rect key="frame" x="40" y="83" width="520" height="497"/>
                                 <animations/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="CuC-Lp-2x2">
-                                    <size key="itemSize" width="100" height="100"/>
+                                    <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="Fll-4I-6EC">
-                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="Fll-4I-6EC" customClass="FSPhotoCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A1c-yF-PiF">
-                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                     <animations/>
+                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 </imageView>
                                             </subviews>
                                             <animations/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <animations/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="photoImageView" destination="A1c-yF-PiF" id="1GK-db-aYQ"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="Wz2-OH-7gi" id="YRE-Sj-m4g"/>
+                                    <outlet property="delegate" destination="Wz2-OH-7gi" id="vRO-ob-JS5"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="HaS-LW-bH2" firstAttribute="top" secondItem="hQQ-qc-ph4" secondAttribute="bottom" constant="63" id="3RO-LE-JSP"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="HaS-LW-bH2" secondAttribute="trailing" constant="20" id="Wtc-8g-cEI"/>
+                            <constraint firstItem="HaS-LW-bH2" firstAttribute="leading" secondItem="Tmk-YC-AZm" secondAttribute="leadingMargin" constant="20" id="nzF-nt-L8V"/>
+                            <constraint firstItem="leT-vW-rVF" firstAttribute="top" secondItem="HaS-LW-bH2" secondAttribute="bottom" constant="20" id="pXP-VB-tJy"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="HaS-LW-bH2" id="tLS-ca-6LY"/>
+                    </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Emh-7t-GhP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1088" y="825"/>
         </scene>
