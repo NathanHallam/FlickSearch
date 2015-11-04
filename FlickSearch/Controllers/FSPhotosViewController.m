@@ -15,6 +15,7 @@
 @interface FSPhotosViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) IBOutlet UICollectionView* collectionView;
+@property (nonatomic, strong) IBOutlet UISearchBar* searchBar;
 
 @end
 
@@ -24,20 +25,8 @@
     [super viewDidLoad];
     
     FlickrKit *fk = [FlickrKit sharedFlickrKit];
-    FKFlickrInterestingnessGetList *interesting = [[FKFlickrInterestingnessGetList alloc] init];
-    [fk call:interesting completion:^(NSDictionary *response, NSError *error) {
-        // Note this is not the main thread!
-        if (response) {
-            NSMutableArray *photoURLs = [NSMutableArray array];
-            for (NSDictionary *photoData in [response valueForKeyPath:@"photos.photo"]) {
-                NSURL *url = [fk photoURLForSize:FKPhotoSizeSmall240 fromPhotoDictionary:photoData];
-                [photoURLs addObject:url];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                // Any GUI related operations here
-            });
-        }   
-    }];
+    
+    fk uploadImage:<#(DUImage *)#> args:<#(NSDictionary *)#> completion:<#^(NSString *imageID, NSError *error)completion#>
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,14 +38,13 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    
-    return 50;
+    return [self.photoURLS count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     FSPhotoCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
-    
+    cell.photoURL = [self.photoURLS objectAtIndex:indexPath.row];
     return cell;
 }
 
