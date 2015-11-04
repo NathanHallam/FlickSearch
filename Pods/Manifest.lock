@@ -1,10 +1,13 @@
 PODS:
   - FlickrKit (1.0.6)
+  - Haneke (1.0.1)
 
 DEPENDENCIES:
   - FlickrKit
+  - Haneke
 
 SPEC CHECKSUMS:
   FlickrKit: 43d2dfc3e841e002c625e9943373479c92a1194e
+  Haneke: d60be8b96b228633b24708dd153169d6849d6f78
 
 COCOAPODS: 0.39.0

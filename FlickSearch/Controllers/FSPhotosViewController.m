@@ -8,6 +8,8 @@
 
 #import "FSPhotosViewController.h"
 #import "FSPhotoCell.h"
+#import "FlickrKit.h"
+#import "Haneke.h"
 
 
 @interface FSPhotosViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
@@ -20,12 +22,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    FlickrKit *fk = [FlickrKit sharedFlickrKit];
+    FKFlickrInterestingnessGetList *interesting = [[FKFlickrInterestingnessGetList alloc] init];
+    [fk call:interesting completion:^(NSDictionary *response, NSError *error) {
+        // Note this is not the main thread!
+        if (response) {
+            NSMutableArray *photoURLs = [NSMutableArray array];
+            for (NSDictionary *photoData in [response valueForKeyPath:@"photos.photo"]) {
+                NSURL *url = [fk photoURLForSize:FKPhotoSizeSmall240 fromPhotoDictionary:photoData];
+                [photoURLs addObject:url];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Any GUI related operations here
+            });
+        }   
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
