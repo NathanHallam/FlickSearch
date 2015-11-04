@@ -1,0 +1,1 @@
+../../../FlickrKit/Classes/Model/ModelGenerator/SupportingFiles/AppDelegate.h
