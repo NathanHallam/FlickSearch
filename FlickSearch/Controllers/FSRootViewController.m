@@ -32,7 +32,7 @@
         if (response) {
             NSMutableArray *photoURLs = [NSMutableArray array];
             for (NSDictionary *photoData in [response valueForKeyPath:@"photos.photo"]) {
-                NSURL *url = [fk photoURLForSize:FKPhotoSizeSmallSquare75 fromPhotoDictionary:photoData];
+                NSURL *url = [fk photoURLForSize:FKPhotoSizeLargeSquare150 fromPhotoDictionary:photoData];
                 [photoURLs addObject:url];
             }
             NSLog(@"URLs Loaded: %lu",[photoURLs count]);

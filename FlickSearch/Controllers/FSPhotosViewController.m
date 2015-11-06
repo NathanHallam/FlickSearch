@@ -9,8 +9,10 @@
 #import "FSPhotosViewController.h"
 #import "FSPhotoCell.h"
 #import "FlickrKit.h"
-#import "Haneke.h"
+//#import "Haneke.h"
 
+#define kCellsPerRow 4
+#define kCellPadding 1.f
 
 @interface FSPhotosViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
@@ -23,18 +25,40 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    FlickrKit *fk = [FlickrKit sharedFlickrKit];
-    
-    fk uploadImage:<#(DUImage *)#> args:<#(NSDictionary *)#> completion:<#^(NSString *imageID, NSError *error)completion#>
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning {   
     [super didReceiveMemoryWarning];
 }
 
 
 #pragma mark - UICollection View Methods
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGSize cellSize;
+    CGFloat width = ((self.collectionView.frame.size.width - kCellPadding) / kCellsPerRow) - kCellPadding;
+
+    cellSize.width = width;
+    cellSize.height = width;
+    
+    return cellSize;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    return kCellPadding;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return kCellPadding;
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
+    return UIEdgeInsetsMake(kCellPadding, kCellPadding, kCellPadding, kCellPadding);
+}
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
