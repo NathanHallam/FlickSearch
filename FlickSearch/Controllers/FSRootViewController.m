@@ -21,28 +21,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self.indicator startAnimating];
-
-    [[FlickrKit sharedFlickrKit] initializeWithAPIKey:@"2076e48d7d3e951cf8e6b3685c8dd44d" sharedSecret:@"6138b35cb585e73d"];
-    
-    FlickrKit *fk = [FlickrKit sharedFlickrKit];
-    FKFlickrInterestingnessGetList *interesting = [[FKFlickrInterestingnessGetList alloc] init];
-    [fk call:interesting completion:^(NSDictionary *response, NSError *error) {
-        // Note this is not the main thread!
-        if (response) {
-            NSMutableArray *photoURLs = [NSMutableArray array];
-            for (NSDictionary *photoData in [response valueForKeyPath:@"photos.photo"]) {
-                NSURL *url = [fk photoURLForSize:FKPhotoSizeLargeSquare150 fromPhotoDictionary:photoData];
-                [photoURLs addObject:url];
-            }
-            NSLog(@"URLs Loaded: %lu",[photoURLs count]);
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.indicator stopAnimating];
-                [self performSegueWithIdentifier:@"RootPhotosSegue" sender:photoURLs];
-            });
-        }
-    }];
+//    [self.indicator startAnimating];
+//
+//    [[FlickrKit sharedFlickrKit] initializeWithAPIKey:@"2076e48d7d3e951cf8e6b3685c8dd44d" sharedSecret:@"6138b35cb585e73d"];
+//    
+//    FlickrKit *fk = [FlickrKit sharedFlickrKit];
+//    FKFlickrInterestingnessGetList *interesting = [[FKFlickrInterestingnessGetList alloc] init];
+//    
+//    [fk call:interesting completion:^(NSDictionary *response, NSError *error) {
+//        // Note this is not the main thread!
+//        if (response) {
+//            NSMutableArray *photoURLs = [NSMutableArray array];
+//            for (NSDictionary *photoData in [response valueForKeyPath:@"photos.photo"]) {
+//                NSURL *url = [fk photoURLForSize:FKPhotoSizeLargeSquare150 fromPhotoDictionary:photoData];
+//                [photoURLs addObject:url];
+//            }
+//            NSLog(@"URLs Loaded: %lu",[photoURLs count]);
+//            
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [self.indicator stopAnimating];
+//                [self performSegueWithIdentifier:@"RootPhotosSegue" sender:photoURLs];
+//            });
+//        }
+//    }];
+    [self performSegueWithIdentifier:@"RootPhotosSegue" sender:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -50,13 +52,13 @@
 }
 
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if([segue.identifier isEqualToString:@"RootPhotosSegue"]) {
-        FSPhotosViewController* destination = segue.destinationViewController;
-        destination.photoURLS = sender;
-    }
-}
+//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+//{
+//    if([segue.identifier isEqualToString:@"RootPhotosSegue"]) {
+//        FSPhotosViewController* destination = segue.destinationViewController;
+//        destination.photoURLS = sender;
+//    }
+//}
 
 
 @end

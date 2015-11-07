@@ -25,10 +25,6 @@
         _photoURL = photoURL;
         
         [self.photoImageView hnk_setImageFromURL:photoURL];
-        
-        [UIView animateWithDuration:3.f animations:^{
-            self.photoImageView.alpha = 1.f;
-        }];
     }
 }
 

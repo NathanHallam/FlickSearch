@@ -14,7 +14,7 @@
 		754A5F231BE9E17F00059841 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754A5F221BE9E17F00059841 /* UIKit.framework */; };
 		75B7EB161BE9FA130043B9AE /* FSPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B7EB151BE9FA130043B9AE /* FSPhotoCell.m */; };
 		75B7EB1B1BE9FA270043B9AE /* FSPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B7EB181BE9FA270043B9AE /* FSPhotosViewController.m */; };
-		75B7EB1C1BE9FA270043B9AE /* FSRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B7EB1A1BE9FA270043B9AE /* FSRootViewController.m */; };
+		75B7EB1F1BED6CCA0043B9AE /* FSPhotoDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B7EB1E1BED6CCA0043B9AE /* FSPhotoDetailsViewController.m */; };
 		E4CB73A1A117D706C9B00B11 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 995EF0687488C107A1A8DB3A /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -33,8 +33,8 @@
 		75B7EB151BE9FA130043B9AE /* FSPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSPhotoCell.m; path = Cells/FSPhotoCell.m; sourceTree = "<group>"; };
 		75B7EB171BE9FA270043B9AE /* FSPhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSPhotosViewController.h; path = Controllers/FSPhotosViewController.h; sourceTree = "<group>"; };
 		75B7EB181BE9FA270043B9AE /* FSPhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSPhotosViewController.m; path = Controllers/FSPhotosViewController.m; sourceTree = "<group>"; };
-		75B7EB191BE9FA270043B9AE /* FSRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSRootViewController.h; path = Controllers/FSRootViewController.h; sourceTree = "<group>"; };
-		75B7EB1A1BE9FA270043B9AE /* FSRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSRootViewController.m; path = Controllers/FSRootViewController.m; sourceTree = "<group>"; };
+		75B7EB1D1BED6CCA0043B9AE /* FSPhotoDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSPhotoDetailsViewController.h; path = Controllers/FSPhotoDetailsViewController.h; sourceTree = "<group>"; };
+		75B7EB1E1BED6CCA0043B9AE /* FSPhotoDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSPhotoDetailsViewController.m; path = Controllers/FSPhotoDetailsViewController.m; sourceTree = "<group>"; };
 		995EF0687488C107A1A8DB3A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -106,10 +106,10 @@
 		754A5F241BE9E51B00059841 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				75B7EB191BE9FA270043B9AE /* FSRootViewController.h */,
-				75B7EB1A1BE9FA270043B9AE /* FSRootViewController.m */,
 				75B7EB171BE9FA270043B9AE /* FSPhotosViewController.h */,
 				75B7EB181BE9FA270043B9AE /* FSPhotosViewController.m */,
+				75B7EB1D1BED6CCA0043B9AE /* FSPhotoDetailsViewController.h */,
+				75B7EB1E1BED6CCA0043B9AE /* FSPhotoDetailsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -267,10 +267,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				75B7EB1B1BE9FA270043B9AE /* FSPhotosViewController.m in Sources */,
-				75B7EB1C1BE9FA270043B9AE /* FSRootViewController.m in Sources */,
 				75B7EB161BE9FA130043B9AE /* FSPhotoCell.m in Sources */,
 				754A5F101BE9E07900059841 /* FSAppDelegate.m in Sources */,
 				754A5F0D1BE9E07900059841 /* main.m in Sources */,
+				75B7EB1F1BED6CCA0043B9AE /* FSPhotoDetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

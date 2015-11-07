@@ -7,17 +7,28 @@
 //
 
 #import "FSPhotosViewController.h"
+#import "FSPhotoDetailsViewController.h"
 #import "FSPhotoCell.h"
 #import "FlickrKit.h"
 //#import "Haneke.h"
 
 #define kCellsPerRow 4
-#define kCellPadding 1.f
+#define kCellPadding 2.f
 
-@interface FSPhotosViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface FSPhotosViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UISearchBarDelegate>
 
 @property (nonatomic, strong) IBOutlet UICollectionView* collectionView;
+@property (nonatomic, strong) UITapGestureRecognizer* tapRecognizer;
+@property (nonatomic, weak) FSPhotoDetailsViewController* detailsController;
+
+@property (strong, nonatomic) IBOutlet UIView *containerView;
+
 @property (nonatomic, strong) IBOutlet UISearchBar* searchBar;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView* indicator;
+
+
+
+- (IBAction)respondToTapGesture:(id)sender;
 
 @end
 
@@ -25,11 +36,44 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    [[FlickrKit sharedFlickrKit] initializeWithAPIKey:@"2076e48d7d3e951cf8e6b3685c8dd44d" sharedSecret:@"6138b35cb585e73d"];
+    
+    [self startWithInterestingImages];
+    
+    self.containerView.hidden = NO;
+    self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondToTapGesture:)];
+    self.tapRecognizer.numberOfTapsRequired = 1;
+    [self.containerView addGestureRecognizer:self.tapRecognizer];
 }
 
 - (void)didReceiveMemoryWarning {   
     [super didReceiveMemoryWarning];
+}
+
+
+#pragma mark - Helper Methods
+
+- (void)startWithInterestingImages
+{
+    FlickrKit *fk = [FlickrKit sharedFlickrKit];
+    FKFlickrInterestingnessGetList *interesting = [[FKFlickrInterestingnessGetList alloc] init];
+    
+    [fk call:interesting completion:^(NSDictionary *response, NSError *error) {
+        // Note this is not the main thread!
+        if (response) {
+            NSMutableArray *photoURLs = [NSMutableArray array];
+            for (NSDictionary *photoData in [response valueForKeyPath:@"photos.photo"]) {
+                NSURL *url = [fk photoURLForSize:FKPhotoSizeLargeSquare150 fromPhotoDictionary:photoData];
+                [photoURLs addObject:url];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.photoURLS = photoURLs;
+                [self.collectionView reloadData];
+                [self.indicator stopAnimating];
+            });
+        }
+    }];
 }
 
 
@@ -72,9 +116,27 @@
     return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)respondToTapGesture:(id)sender
 {
-
+    [UIView animateWithDuration:0.3f animations:^{
+        self.containerView.alpha = 0.f;
+    } completion:^(BOOL finished) {
+        [self.detailsController removeFromParentViewController];
+    }];
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    //FSPhotoCell* cell = (FSPhotoCell*)[collectionView cellForItemAtIndexPath:indexPath];
+    self.detailsController = [self.storyboard instantiateViewControllerWithIdentifier:@"PhotoDetailsViewController"];
+    [self.detailsController.view setBounds:self.containerView.frame];
+    [self addChildViewController:self.detailsController];
+    [self.containerView addSubview:self.detailsController.view];
+    [UIView animateWithDuration:0.3f animations:^{
+        self.containerView.alpha = 1.f;
+    }];
+}
+
+
+     
 @end
