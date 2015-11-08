@@ -10,4 +10,6 @@
 
 @interface FSPhotoDetailsViewController : UIViewController
 
+@property (nonatomic, strong) NSDictionary* photo;
+
 @end

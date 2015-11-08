@@ -12,23 +12,19 @@
 #import "FlickrKit.h"
 //#import "Haneke.h"
 
-#define kCellsPerRow 4
+#define kCellsPerRow 3
 #define kCellPadding 2.f
 
 @interface FSPhotosViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UISearchBarDelegate>
 
-@property (nonatomic, strong) IBOutlet UICollectionView* collectionView;
 @property (nonatomic, strong) UITapGestureRecognizer* tapRecognizer;
 @property (nonatomic, weak) FSPhotoDetailsViewController* detailsController;
 
-@property (strong, nonatomic) IBOutlet UIView *containerView;
-
+@property (nonatomic, strong) IBOutlet UICollectionView* collectionView;
+@property (nonatomic, strong) IBOutlet UIView *containerView;
 @property (nonatomic, strong) IBOutlet UISearchBar* searchBar;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView* indicator;
-
-
-
-- (IBAction)respondToTapGesture:(id)sender;
+@property (nonatomic, strong) NSMutableArray* photosArray;
 
 @end
 
@@ -36,7 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self.indicator startAnimating];
     [[FlickrKit sharedFlickrKit] initializeWithAPIKey:@"2076e48d7d3e951cf8e6b3685c8dd44d" sharedSecret:@"6138b35cb585e73d"];
     
     [self startWithInterestingImages];
@@ -62,13 +58,13 @@
     [fk call:interesting completion:^(NSDictionary *response, NSError *error) {
         // Note this is not the main thread!
         if (response) {
-            NSMutableArray *photoURLs = [NSMutableArray array];
+            NSMutableArray *photos = [NSMutableArray array];
+            //Get list of unique photo ids
             for (NSDictionary *photoData in [response valueForKeyPath:@"photos.photo"]) {
-                NSURL *url = [fk photoURLForSize:FKPhotoSizeLargeSquare150 fromPhotoDictionary:photoData];
-                [photoURLs addObject:url];
+                [photos addObject:photoData];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.photoURLS = photoURLs;
+                self.photosArray = photos;
                 [self.collectionView reloadData];
                 [self.indicator stopAnimating];
             });
@@ -76,8 +72,44 @@
     }];
 }
 
+- (void)respondToTapGesture:(id)sender
+{
+    [UIView animateWithDuration:0.3f animations:^{
+        self.containerView.alpha = 0.f;
+    } completion:^(BOOL finished) {
+        [self.detailsController removeFromParentViewController];
+        for(UIView* view in self.containerView.subviews) {
+            [view removeFromSuperview];
+        } 
+    }];
+}
 
-#pragma mark - UICollection View Methods
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self.photosArray removeAllObjects];
+    [self.collectionView reloadData];
+    [self.indicator startAnimating];
+    FlickrKit *fk = [FlickrKit sharedFlickrKit];
+    [fk call:@"flickr.photos.search" args:@{@"text":searchBar.text} completion:^(NSDictionary *response, NSError *error) {
+        if (response) {
+            NSMutableArray *photos = [NSMutableArray array];
+            for (NSDictionary *photoData in [response valueForKeyPath:@"photos.photo"]) {
+                [photos addObject:photoData];
+            }
+            NSLog(@"Found %lu photos matching %@", [photos count],searchBar.text);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.photosArray = photos;
+                [self.collectionView reloadData];
+                [self.indicator stopAnimating];
+            });
+        } else {
+            [self.indicator stopAnimating];
+        }
+    }];
+    [searchBar resignFirstResponder];
+}
+
+#pragma mark - Collection View Methods
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -106,29 +138,23 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [self.photoURLS count];
+    return [self.photosArray count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     FSPhotoCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoCell" forIndexPath:indexPath];
-    cell.photoURL = [self.photoURLS objectAtIndex:indexPath.row];
+    cell.photo = self.photosArray[indexPath.row]; 
+    
     return cell;
-}
-
-- (void)respondToTapGesture:(id)sender
-{
-    [UIView animateWithDuration:0.3f animations:^{
-        self.containerView.alpha = 0.f;
-    } completion:^(BOOL finished) {
-        [self.detailsController removeFromParentViewController];
-    }];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    //FSPhotoCell* cell = (FSPhotoCell*)[collectionView cellForItemAtIndexPath:indexPath];
+    [self.searchBar resignFirstResponder];
+    FSPhotoCell* cell = (FSPhotoCell*)[collectionView cellForItemAtIndexPath:indexPath];
     self.detailsController = [self.storyboard instantiateViewControllerWithIdentifier:@"PhotoDetailsViewController"];
+    self.detailsController.photo = cell.photo;
     [self.detailsController.view setBounds:self.containerView.frame];
     [self addChildViewController:self.detailsController];
     [self.containerView addSubview:self.detailsController.view];

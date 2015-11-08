@@ -10,6 +10,6 @@
 
 @interface FSPhotoCell : UICollectionViewCell
 
-@property (nonatomic, strong) NSURL* photoURL;
+@property (nonatomic, strong) NSDictionary* photo;
 
 @end

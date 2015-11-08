@@ -10,7 +10,5 @@
 
 @interface FSPhotosViewController : UIViewController
 
-@property (nonatomic, strong) NSMutableArray* photoURLS;
-
 @end
 

@@ -7,20 +7,34 @@
 //
 
 #import "FSPhotoDetailsViewController.h"
+#import "Haneke.h"
+#import "FlickrKit.h"
 
 @interface FSPhotoDetailsViewController ()
 
 @property (nonatomic, strong) IBOutlet UIImageView* photoImageView;
 @property (strong, nonatomic) IBOutlet UILabel *photoNameLabel;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView* indicator;
 
 @end
 
 @implementation FSPhotoDetailsViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    NSLog(@"%@",self.photo);
+    [self.photoNameLabel setText:[self.photo objectForKey:@"title"]];
+    NSURL* url = [[FlickrKit sharedFlickrKit] photoURLForSize:FKPhotoSizeSmall320 fromPhotoDictionary:_photo];
+    [self.photoImageView hnk_setImageFromURL:url placeholder:nil success:^(UIImage *image) {
+        [self.photoImageView setImage:image];
+        [UIView animateWithDuration:.7f animations:^{
+            self.photoImageView.alpha = 1.f;
+        }];
+        [self.indicator stopAnimating];
+    } failure:^(NSError *error) {
+        NSLog(@"Error: %@",error);
+        [self.indicator stopAnimating];
+    }];
     
-    [self.photoNameLabel setText:@"Photo Test"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -28,17 +42,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
