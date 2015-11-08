@@ -50,7 +50,7 @@
     [self.layer removeAllAnimations];
     [self setBackgroundColor:[UIColor darkGrayColor]];
     [UIView animateWithDuration:0.7f delay:0.f usingSpringWithDamping:.2f initialSpringVelocity:1.f options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{
-        [self setBackgroundColor:[UIColor colorWithRed:77.f/255.f green:133.f/255.f blue:24.f/255.f alpha:.8f]];
+        [self setBackgroundColor:[UIColor colorWithRed:5.f/255.f green:78.f/255.f blue:127.f/255.f alpha:.8f]];
     } completion:nil];
 }
 
