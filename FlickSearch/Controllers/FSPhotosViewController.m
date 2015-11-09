@@ -14,6 +14,9 @@
 
 #define kCellsPerRow 3
 #define kCellPadding 2.f
+#define kFlickrAPIKey @"2076e48d7d3e951cf8e6b3685c8dd44d"
+#define kFlickrSharedSecret @"6138b35cb585e73d"
+
 
 @interface FSPhotosViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UISearchBarDelegate>
 
@@ -33,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.indicator startAnimating];
-    [[FlickrKit sharedFlickrKit] initializeWithAPIKey:@"2076e48d7d3e951cf8e6b3685c8dd44d" sharedSecret:@"6138b35cb585e73d"];
+    [[FlickrKit sharedFlickrKit] initializeWithAPIKey:kFlickrAPIKey sharedSecret:kFlickrSharedSecret];
     
     [self startWithInterestingImages];
     
@@ -114,7 +117,8 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CGSize cellSize;
-    CGFloat width = ((self.collectionView.frame.size.width - kCellPadding) / kCellsPerRow) - kCellPadding;
+    int landscapeExtraCells = UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]) ? 2 : 0;
+    CGFloat width = ((self.collectionView.frame.size.width - kCellPadding) / (kCellsPerRow + landscapeExtraCells)) - kCellPadding;
 
     cellSize.width = width;
     cellSize.height = width;
@@ -163,6 +167,8 @@
     }];
 }
 
-
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [self.collectionView reloadData];
+}
      
 @end
