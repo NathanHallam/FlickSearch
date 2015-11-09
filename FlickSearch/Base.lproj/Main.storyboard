@@ -213,16 +213,15 @@
                             <constraint firstItem="4ck-hk-hn3" firstAttribute="centerX" secondItem="9db-s1-bOG" secondAttribute="centerX" id="3WC-G5-nik"/>
                             <constraint firstItem="TbO-rc-a9t" firstAttribute="leading" secondItem="9db-s1-bOG" secondAttribute="leading" constant="8" id="3pc-KO-o6V"/>
                             <constraint firstAttribute="trailing" secondItem="TbO-rc-a9t" secondAttribute="trailing" constant="8" id="82F-f2-30E"/>
+                            <constraint firstItem="uJQ-NC-dc3" firstAttribute="top" secondItem="du3-D8-dnx" secondAttribute="bottom" constant="56" id="Et1-T8-tkZ"/>
                             <constraint firstItem="Wj4-rw-Cez" firstAttribute="leading" secondItem="9db-s1-bOG" secondAttribute="leading" constant="5" id="GGV-nT-M89"/>
+                            <constraint firstItem="du3-D8-dnx" firstAttribute="centerX" secondItem="9db-s1-bOG" secondAttribute="centerX" id="IwU-Tr-UNS"/>
                             <constraint firstAttribute="trailing" secondItem="Tv0-A5-BV2" secondAttribute="trailing" id="JTf-V8-RFE"/>
-                            <constraint firstItem="du3-D8-dnx" firstAttribute="leading" secondItem="9db-s1-bOG" secondAttribute="leading" constant="178" id="M2B-P9-Vug"/>
                             <constraint firstItem="Tv0-A5-BV2" firstAttribute="top" secondItem="jUw-hC-0aB" secondAttribute="bottom" id="N5t-vl-5sF"/>
                             <constraint firstItem="TbO-rc-a9t" firstAttribute="top" secondItem="Wj4-rw-Cez" secondAttribute="bottom" constant="8" id="Ps6-M5-qle"/>
-                            <constraint firstItem="uJQ-NC-dc3" firstAttribute="top" secondItem="du3-D8-dnx" secondAttribute="bottom" constant="56" id="RTA-wZ-g4T"/>
                             <constraint firstItem="Tv0-A5-BV2" firstAttribute="leading" secondItem="9db-s1-bOG" secondAttribute="leading" id="SKk-2h-Z09"/>
-                            <constraint firstAttribute="trailing" secondItem="du3-D8-dnx" secondAttribute="trailing" constant="177" id="WNd-au-lPt"/>
                             <constraint firstItem="4ck-hk-hn3" firstAttribute="centerY" secondItem="9db-s1-bOG" secondAttribute="centerY" id="cR9-o9-7Bs"/>
-                            <constraint firstItem="du3-D8-dnx" firstAttribute="top" secondItem="TbO-rc-a9t" secondAttribute="bottom" constant="54" id="cXb-VN-mLN"/>
+                            <constraint firstItem="du3-D8-dnx" firstAttribute="top" secondItem="TbO-rc-a9t" secondAttribute="bottom" constant="54" id="ehf-er-VQi"/>
                             <constraint firstItem="ts1-G6-TJi" firstAttribute="top" secondItem="TbO-rc-a9t" secondAttribute="bottom" constant="8" id="hTi-Xg-KKT"/>
                             <constraint firstAttribute="trailing" secondItem="ts1-G6-TJi" secondAttribute="trailing" constant="8" id="hac-8F-dNK"/>
                             <constraint firstItem="Wj4-rw-Cez" firstAttribute="top" secondItem="jUw-hC-0aB" secondAttribute="bottom" constant="5" id="ho3-U8-Az1"/>

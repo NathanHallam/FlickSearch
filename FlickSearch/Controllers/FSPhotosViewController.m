@@ -9,8 +9,7 @@
 #import "FSPhotosViewController.h"
 #import "FSPhotoDetailsViewController.h"
 #import "FSPhotoCell.h"
-#import "FlickrKit.h"
-//#import "Haneke.h"
+#import "FlickrKit.h" 
 
 #define kCellsPerRow 3
 #define kCellPadding 2.f
