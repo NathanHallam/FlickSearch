@@ -13,23 +13,27 @@
 @interface FSPhotoDetailsViewController ()
 
 @property (nonatomic, strong) IBOutlet UIImageView* photoImageView;
-@property (strong, nonatomic) IBOutlet UILabel *photoTitleLabel;
-@property (strong, nonatomic) IBOutlet UITextView *photoDescriptionLabel;
-@property (strong, nonatomic) IBOutlet UILabel *photoDateLabel;
-@property (strong, nonatomic) IBOutlet UILabel *photoAuthorLabel;
-@property (strong, nonatomic) IBOutlet UILabel *photoLocationLabel;
+@property (nonatomic, strong) IBOutlet UILabel *photoTitleLabel;
+@property (nonatomic, strong) IBOutlet UITextView *photoDescriptionText; 
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView* indicator;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *metaIndicator;
+
+@property (nonatomic, strong) UITapGestureRecognizer* tapRecognizer;
 
 @end
 
 @implementation FSPhotoDetailsViewController
 
 - (void)viewDidLoad {
+    
+    self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondToTapGesture:)];
+    [self.view addGestureRecognizer:self.tapRecognizer];
+    
     [self.photoTitleLabel setText:[self.photo objectForKey:@"title"]];
     
     FlickrKit* fk = [FlickrKit sharedFlickrKit];
+    NSURL* url = [fk photoURLForSize:FKPhotoSizeMedium640 fromPhotoDictionary:self.photo];
     
-    NSURL* url = [fk photoURLForSize:FKPhotoSizeMedium640 fromPhotoDictionary:_photo];
     [self.photoImageView hnk_setImageFromURL:url placeholder:nil success:^(UIImage *image) {
         [self.photoImageView setImage:image];
         [UIView animateWithDuration:.7f animations:^{
@@ -41,6 +45,18 @@
         [self.indicator stopAnimating];
     }];
     
+    [fk call:@"flickr.photos.getInfo" args:@{@"photo_id" : self.photo[@"id"]} completion:^(NSDictionary *response, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.metaIndicator stopAnimating];
+            if (response) {
+                NSString* description = response[@"photo"][@"description"][@"_content"];
+                description = [description isEqualToString:@""] ? @"No description available" : description;
+                self.photoDescriptionText.text = description;
+            } else {
+                NSLog(@"No response");
+            }
+        });
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,5 +64,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+- (void)respondToTapGesture:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+ 
 @end

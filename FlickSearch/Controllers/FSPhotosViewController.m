@@ -16,6 +16,7 @@
 #define kCellPadding 2.f
 #define kFlickrAPIKey @"2076e48d7d3e951cf8e6b3685c8dd44d"
 #define kFlickrSharedSecret @"6138b35cb585e73d"
+#define kPhotoDetailsSegue @"PhotosDetailsSegue"
 
 
 @interface FSPhotosViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UISearchBarDelegate>
@@ -24,7 +25,6 @@
 
 @property (nonatomic, strong) IBOutlet UISearchBar* searchBar;
 @property (nonatomic, strong) IBOutlet UICollectionView* collectionView;
-@property (nonatomic, strong) IBOutlet UIView *containerView;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView* indicator;
 
 @property (nonatomic, strong) NSMutableArray* photosArray;
@@ -42,16 +42,6 @@
     
     //Start with Interesting images
     [self loadPhotosFrom:@"flickr.interestingness.getList" withArgs:@{@"per_page":@"99"}];
-    
-    //[self startWithInterestingImages];
-    
-    //Container view hidden to make components in storyboard scene visible
-    self.containerView.hidden = NO;
-    
-    //Add tap to close photo details
-    self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondToTapGesture:)];
-    self.tapRecognizer.numberOfTapsRequired = 1;
-    [self.containerView addGestureRecognizer:self.tapRecognizer];
 }
 
 - (void)didReceiveMemoryWarning {   
@@ -60,18 +50,6 @@
 
 
 #pragma mark - Helper Methods
-- (void)respondToTapGesture:(id)sender
-{
-    [UIView animateWithDuration:0.3f animations:^{
-        self.containerView.alpha = 0.f;
-    } completion:^(BOOL finished) {
-        [self.detailsController removeFromParentViewController];
-        for(UIView* view in self.containerView.subviews) {
-            [view removeFromSuperview];
-        } 
-    }];
-}
-
 - (void)loadPhotosFrom:(NSString*)photoMethod withArgs:(NSDictionary*)args
 {
     FlickrKit *fk = [FlickrKit sharedFlickrKit];
@@ -149,14 +127,15 @@
 {
     [self.searchBar resignFirstResponder];
     FSPhotoCell* cell = (FSPhotoCell*)[collectionView cellForItemAtIndexPath:indexPath];
-    self.detailsController = [self.storyboard instantiateViewControllerWithIdentifier:@"PhotoDetailsViewController"];
-    self.detailsController.photo = cell.photo;
-    [self.detailsController.view setBounds:self.containerView.frame];
-    [self addChildViewController:self.detailsController];
-    [self.containerView addSubview:self.detailsController.view];
-    [UIView animateWithDuration:0.3f animations:^{
-        self.containerView.alpha = 1.f;
-    }];
+    [self performSegueWithIdentifier:kPhotoDetailsSegue sender:cell.photo];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:kPhotoDetailsSegue]) {
+        FSPhotoDetailsViewController * destination = segue.destinationViewController;
+        destination.photo = sender;
+    }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
