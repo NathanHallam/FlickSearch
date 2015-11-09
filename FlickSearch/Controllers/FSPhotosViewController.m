@@ -40,7 +40,10 @@
     [self.indicator startAnimating];
     [[FlickrKit sharedFlickrKit] initializeWithAPIKey:kFlickrAPIKey sharedSecret:kFlickrSharedSecret];
     
-    [self startWithInterestingImages];
+    //Start with Interesting images
+    [self loadPhotosFrom:@"flickr.interestingness.getList" withArgs:@{@"per_page":@"99"}];
+    
+    //[self startWithInterestingImages];
     
     //Container view hidden to make components in storyboard scene visible
     self.containerView.hidden = NO;
@@ -57,29 +60,6 @@
 
 
 #pragma mark - Helper Methods
-
-- (void)startWithInterestingImages
-{
-    FlickrKit *fk = [FlickrKit sharedFlickrKit];
-    FKFlickrInterestingnessGetList *interesting = [[FKFlickrInterestingnessGetList alloc] init];
-    
-    [fk call:interesting completion:^(NSDictionary *response, NSError *error) {
-        // Note this is not the main thread!
-        if (response) {
-            NSMutableArray *photos = [NSMutableArray array];
-            //Get list of unique photo ids
-            for (NSDictionary *photoData in [response valueForKeyPath:@"photos.photo"]) {
-                [photos addObject:photoData];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.photosArray = photos;
-                [self.collectionView reloadData];
-                [self.indicator stopAnimating];
-            });
-        }
-    }];
-}
-
 - (void)respondToTapGesture:(id)sender
 {
     [UIView animateWithDuration:0.3f animations:^{
@@ -92,19 +72,15 @@
     }];
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+- (void)loadPhotosFrom:(NSString*)photoMethod withArgs:(NSDictionary*)args
 {
-    [self.photosArray removeAllObjects];
-    [self.collectionView reloadData];
-    [self.indicator startAnimating];
     FlickrKit *fk = [FlickrKit sharedFlickrKit];
-    [fk call:@"flickr.photos.search" args:@{@"text":searchBar.text} completion:^(NSDictionary *response, NSError *error) {
+    [fk call:photoMethod args:args completion:^(NSDictionary *response, NSError *error) {
         if (response) {
             NSMutableArray *photos = [NSMutableArray array];
             for (NSDictionary *photoData in [response valueForKeyPath:@"photos.photo"]) {
                 [photos addObject:photoData];
             }
-            NSLog(@"Found %lu photos matching %@", [photos count],searchBar.text);
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.photosArray = photos;
                 [self.collectionView reloadData];
@@ -114,6 +90,16 @@
             [self.indicator stopAnimating];
         }
     }];
+}
+
+#pragma mark - Search Bar Methods
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self.photosArray removeAllObjects];
+    [self.collectionView reloadData];
+    [self.indicator startAnimating];
+    [self loadPhotosFrom:@"flickr.photos.search"  withArgs:@{@"text":searchBar.text}];
     [searchBar resignFirstResponder];
 }
 
