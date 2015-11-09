@@ -13,8 +13,7 @@
 
 @interface FSPhotoCell ()
 
-@property (nonatomic, strong) IBOutlet UIImageView* photoImageView;
-@property (nonatomic) BOOL blinking;
+@property (nonatomic, strong) IBOutlet UIImageView* photoImageView; 
 
 @end
 
@@ -36,10 +35,7 @@
         } failure:^(NSError *error) {
             NSLog(@"Error: %@",error);
         }];
-        
     }
-    
-    
 }
 
 //Animate with a blinking placeholder

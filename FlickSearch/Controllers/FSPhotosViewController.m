@@ -21,13 +21,15 @@
 @interface FSPhotosViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UISearchBarDelegate>
 
 @property (nonatomic, strong) UITapGestureRecognizer* tapRecognizer;
-@property (nonatomic, weak) FSPhotoDetailsViewController* detailsController;
 
+@property (nonatomic, strong) IBOutlet UISearchBar* searchBar;
 @property (nonatomic, strong) IBOutlet UICollectionView* collectionView;
 @property (nonatomic, strong) IBOutlet UIView *containerView;
-@property (nonatomic, strong) IBOutlet UISearchBar* searchBar;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView* indicator;
+
 @property (nonatomic, strong) NSMutableArray* photosArray;
+
+@property (nonatomic, weak) FSPhotoDetailsViewController* detailsController;
 
 @end
 
@@ -40,7 +42,10 @@
     
     [self startWithInterestingImages];
     
+    //Container view hidden to make components in storyboard scene visible
     self.containerView.hidden = NO;
+    
+    //Add tap to close photo details
     self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondToTapGesture:)];
     self.tapRecognizer.numberOfTapsRequired = 1;
     [self.containerView addGestureRecognizer:self.tapRecognizer];
@@ -117,8 +122,9 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CGSize cellSize;
-    int landscapeExtraCells = UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]) ? 2 : 0;
-    CGFloat width = ((self.collectionView.frame.size.width - kCellPadding) / (kCellsPerRow + landscapeExtraCells)) - kCellPadding;
+    NSInteger landscapeExtraCells = UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]) ? 2 : 0;
+    NSInteger ipadExtraCells = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 2 : 0;
+    CGFloat width = ((self.collectionView.frame.size.width - kCellPadding) / (kCellsPerRow + landscapeExtraCells + ipadExtraCells)) - kCellPadding;
 
     cellSize.width = width;
     cellSize.height = width;
